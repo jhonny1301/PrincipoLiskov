@@ -1,24 +1,6 @@
 import java.util.Iterator;
 import java.util.Vector;
 
-/*public class Configuration {
-    Vector<RecursoPersistente> conf = new Vector<RecursoPersistente>();
-
-    public void cargarConfiguracion() {
-        conf.add(new ConfiguracionSistema());
-        conf.add(new ConfiguracionUsuario());
-        conf.add(new ConfiguracionHoraria());
-
-        for (Iterator<RecursoPersistente> i = conf.iterator(); i.hasNext(); )
-            i.next().load();
-    }
-
-    public void salvarConfiguracion() {
-        for (Iterator<RecursoPersistente> i = conf.iterator(); i.hasNext(); )
-            i.next().save();
-    }
-}*/
-
 public class Configuration {
     private Vector<RecursoPersistente> persistentes = new Vector<>();
     private Vector<RecursoSoloLectura> soloLectura = new Vector<>();
@@ -30,18 +12,26 @@ public class Configuration {
 
         for (RecursoPersistente recurso : persistentes) {
             recurso.load();
+            if (recurso instanceof Inotificable) {
+                ((Inotificable) recurso).notificar();
+            }
         }
         for (RecursoSoloLectura recurso : soloLectura) {
             recurso.load();
+            if (recurso instanceof Inotificable) {
+                ((Inotificable) recurso).notificar();
+            }
         }
     }
 
     public void salvarConfiguracion() {
         for (RecursoPersistente recurso : persistentes) {
             recurso.save();
+            if (recurso instanceof Inotificable) {
+                ((Inotificable) recurso).notificar();
+            }
         }
     }
 }
-
 
 

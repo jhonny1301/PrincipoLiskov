@@ -5,4 +5,7 @@ public class ConfiguracionSistema implements RecursoPersistente {
     public void save(){
         System.out.println("Configuracion sistema almacenada");
     }
+    public void notificar() {
+        System.out.println("Notificación: Configuración del sistema ha sido procesada.");
+    }
 }
